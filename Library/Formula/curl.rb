@@ -24,7 +24,6 @@ class Curl <Formula
       args.push "--enable-ares"
     
     system "./configure", *args
-    
     system "make install"
   end
 end
