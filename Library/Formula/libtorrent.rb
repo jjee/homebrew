@@ -9,6 +9,7 @@ class Libtorrent <Formula
   depends_on 'libsigc++'
 
   def install
+    system "patch -p0 ./src/data/memory_chunk.cc /usr/local/Cellar/mem.patch"
     system "./configure", "--prefix=#{prefix}", "--disable-debug", "--disable-dependency-tracking", "--with-kqueue", "--enable-ipv6"
     system "make"
     system "make install"
