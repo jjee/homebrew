@@ -7,6 +7,12 @@ class Curl <Formula
 
   keg_only :provided_by_osx
 
+  depends on 'c-ares' if ARGV.include? "--enable-ares"
+
+  def options
+    [["--with-ssl", "Include SSL support"],["--enable-ares", "Include c-ares support"]]
+  end
+
   def install
     system "./configure", "--disable-debug", "--disable-dependency-tracking",
                           "--prefix=#{prefix}"
