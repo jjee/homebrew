@@ -14,8 +14,17 @@ class Curl <Formula
   end
 
   def install
-    system "./configure", "--disable-debug", "--disable-dependency-tracking",
-                          "--prefix=#{prefix}"
+    args = ["--disable-debug", "--disable-debug", "--disable-dependency-tracking",
+                               "--prefix=#{prefix}"]
+                               
+    if ARGV.include? '--with-ssl'
+      args.push "--with-ssl"
+    
+    if ARGV.include? '--enable-ares'
+      args.push "--enable-ares"
+    
+    system "./configure", *args
+    
     system "make install"
   end
 end
