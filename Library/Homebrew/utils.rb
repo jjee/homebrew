@@ -8,7 +8,7 @@ class Tty
     def yellow; underline 33 ; end
     def reset; escape 0; end
     def em; underline 39; end
-    
+
   private
     def color n
       escape "0;#{n}"
@@ -264,11 +264,16 @@ module MacOS extend self
       elsif File.directory? '/Developer'
         # we do this to support cowboys who insist on installing
         # only a subset of Xcode
-        '/Developer'
+        Pathname.new '/Developer'
       else
         nil
       end
     end
+  end
+
+  def xcode_version
+    `xcodebuild -version 2>&1` =~ /Xcode (\d(\.\d)*)/
+    $1
   end
 
   def llvm_build_version
@@ -323,6 +328,10 @@ module MacOS extend self
 
   def snow_leopard?
     10.6 <= MACOS_VERSION # Actually Snow Leopard or newer
+  end
+
+  def lion?
+    10.7 == MACOS_VERSION
   end
 
   def prefer_64_bit?
